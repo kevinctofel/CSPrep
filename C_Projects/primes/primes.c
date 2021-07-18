@@ -1,33 +1,41 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 int main()
 {
 
-    int numToTest = 3;       // numbers to test from 3 to 100
-    int primes[50] = {2, 3}; // array to store primes
+    int p;
+    int i;
+    bool isPrime;
+    int primes[50] = {0};
+    int primeIndex = 2;
 
-    // outer loop for numbers to test from 3 to 100
-    // increment by 2 to skip even numbers
+    primes[0] = 2;
+    primes[1] = 3;
 
-    for (int n = numToTest; n <= 100; n += 2)
+    for (p = 5; p <= 100; p = p + 2)
     {
+        isPrime = true;
 
-        // inner loop to divide numToTest by array of primes
-        // prime means numToTest is not evenly divisible by prior primes
-
-        for (int p = 0; p < 50; p++)
+        for (i = 1; (isPrime && ((p / primes[i]) >= primes[i])); ++i)
         {
-            if (n % primes[p] != 0)
-                primes[p] = n; // found a prime
+            if (p % primes[i] == 0)
+                isPrime = false;
+        }
+        if (isPrime == true)
+        {
+            primes[primeIndex] = p;
+            ++primeIndex;
         }
     }
 
-    // loop to print out array of primes
-
-    for (int i = 0; i < 50; i++)
+    printf("Prime numbers up to 100: \n");
+    for (int j = 0; j < primeIndex; j++)
     {
-        printf("%d, ", primes[i]);
+        printf("%d, ", primes[j]);
     }
+    printf("\n");
 
     return 0;
 }
